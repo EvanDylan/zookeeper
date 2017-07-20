@@ -34,7 +34,7 @@ public class ZkCreateDemo {
 
         // 异步创建数据节点方法
         Object ctx = new Object();
-        client.create("asynchronous-data", SerializationUtils.serialize(node),
+        client.create("/asynchronous-data", SerializationUtils.serialize(node),
                 ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL, new AsyncCallback.StringCallback() {
                     @Override
                     public void processResult(int rc, String path, Object ctx, String name) {
