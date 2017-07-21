@@ -81,7 +81,7 @@
     
         zkServer.sh status
         
-### 2.zookeeper运行模式
+### 2.	zookeeper运行模式
   
   1). 单机模式。
   
@@ -91,7 +91,7 @@
 
 ## 客户端
 
-### 自带命令行工具
+### 1. 自带命令行工具
 1). 连接zk 
     
     $ bin/zkCli.sh -server 127.0.0.1:2181
@@ -121,9 +121,47 @@
 	getAcl path
 	close 
 	connect host:port
-### 第三方客户端工具
-1). 有哪些
+### 2. 第三方客户端工具
+#### 1). 有哪些
 	
 	a). 原生的客户端工具，maven地址:https://mvnrepository.com/artifact/org.apache.zookeeper/zookeeper
 	b). Netflix开源的curator，maven地址:https://mvnrepository.com/artifact/org.apache.curator/curator-framework
+
+#### 2). 使用zookeeper原生的客户端工具
+	
+a). 创建连接
+
+```
+public class ZkConnectDemo {
+
+    private static final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+    public static void main(String[] args) throws Exception {
+
+        System.out.println("begin connect to zk server...");
+        // 创建客户端，超时时间3s.
+        ZooKeeper client = new ZooKeeper("127.0.0.1:2181", 3000,
+                new DefaultWatcher(countDownLatch));
+        countDownLatch.await();
+        System.out.println("session established...");
+    }
+}
+
+class DefaultWatcher implements Watcher {
+
+    private CountDownLatch countDownLatch;
+
+    public DefaultWatcher(CountDownLatch countDownLatch) {
+        this.countDownLatch = countDownLatch;
+    }
+
+    @Override
+    public void process(WatchedEvent event) {
+        if (Event.KeeperState.SyncConnected == event.getState()) {
+            System.out.println("client already connected, session created...");
+            countDownLatch.countDown();
+        }
+    }
+}
+```
       

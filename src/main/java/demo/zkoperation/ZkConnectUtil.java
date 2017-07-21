@@ -1,4 +1,4 @@
-package demo;
+package demo.zkoperation;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -22,9 +22,7 @@ public class ZkConnectUtil {
 
         @Override
         public void process(WatchedEvent event) {
-
-
-
+            System.out.println(event.toString());
         }
     }
 
