@@ -19,7 +19,7 @@ public class Get_Data_Sample {
             }
         });
         
-        System.out.println(zkClient.readData(path));
+        zkClient.readData(path);
         zkClient.writeData(path,"456");
         Thread.sleep(1000);
         zkClient.delete(path);
