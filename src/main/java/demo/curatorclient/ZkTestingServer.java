@@ -11,6 +11,9 @@ public class ZkTestingServer {
 
     public static void main(String[] args) throws Exception {
 
+        /**
+         * 小心路径，停止的时候会删除该路径下的文件
+         */
         TestingServer server = new TestingServer(2185, new File("/Users/evan/tmp"));
         CuratorFramework client = CuratorFrameworkFactory.builder()
                 .connectString(server.getConnectString())
